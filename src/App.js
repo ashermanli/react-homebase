@@ -8,6 +8,7 @@ import './App.css'
 function App() {
 
   const [time, setTime] = useState('00:00:00')
+  const [hours, setHours] = useState('')
   const [progWidth, setProgWidth] = useState(0)
   
 
@@ -20,7 +21,9 @@ function App() {
     const min = formatTime(date.getMinutes())
     const sec = formatTime(date.getSeconds())
 
+
     setTime(hour+":"+min+":"+sec)
+    setHours(hour)
     calcProgWidth(min,sec)
   }
 
@@ -49,7 +52,7 @@ function App() {
 
   return (
     <div className="Main">
-      <Weather WEATHER_KEY={WEATHER_KEY}></Weather>
+      <Weather WEATHER_KEY={WEATHER_KEY} hours={hours}></Weather>
       <div className="ClockBar">
       <Clock time={time}></Clock>
       <Bar progWidth={progWidth}></Bar>

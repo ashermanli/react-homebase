@@ -1,7 +1,7 @@
 import React, {useState,useEffect, useRef} from 'react'
 import axios from 'axios'
 
-const Weather = ({WEATHER_KEY}) =>{
+const Weather = ({WEATHER_KEY, hours}) =>{
 
     const [loading, setLoading] =useState(false)
     const [coordinates, setCoordinates] = useState([])
@@ -9,6 +9,7 @@ const Weather = ({WEATHER_KEY}) =>{
     const [info, setInfo] = useState([])
     
 
+    //On initial render we gather coordinates for our location
     useEffect(()=>{
     //Gets coordinates for currrent location
     const getLocationWeather = () =>{
@@ -58,7 +59,7 @@ const Weather = ({WEATHER_KEY}) =>{
             })
             .then(data => {
                 setWeatherData(data)
-
+                
                 //for debugging
                 // const time = new Date(data.current.dt *1000)
                 // const hour = time.getHours()
@@ -70,40 +71,51 @@ const Weather = ({WEATHER_KEY}) =>{
                 setLoading(false)
             })
     }
-    },[coordinates])
+    },[coordinates, hours])
 
+    //Once the api call has gathered the weather data, make a call to fill the array with data we want
     useEffect(()=>{
+
+        const degToCompass = (num)=> {
+            var val = Math.floor((num / 22.5) + 0.5);
+            var arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
+            return arr[(val % 16)];
+          }
+
+        const fillInfo = ()=>{
+            const fill = {
+                'temp': weatherData.current.temp,
+                'sunrise': weatherData.current.sunrise,
+                'sunset': weatherData.current.sunset,
+                'wind-speed': weatherData.current.wind_speed,
+                'windDeg': weatherData.current.wind_deg
+            }
+    
+            const entries = Object.entries(fill)
+            
+            let infoArray = []
+    
+            for(const [key,value] of entries){
+                const text = (key === 'temp') ? `${key.toUpperCase()} : ${value}°F`: 
+                             (key === 'sunrise' || key === 'sunset')? `${key.toUpperCase()} ${new Date(value *1000).getHours()} : ${new Date(value *1000).getMinutes()}`:
+                             (key === 'windDeg')? `WIND-DIR : ${degToCompass(value)}`:
+                             `${key.toUpperCase()} : ${value}`
+                infoArray = [...infoArray,text]
+                // console.log(infoArray)
+                setInfo(infoArray)
+    
+            }
+        }
+
        if(weatherData != null)fillInfo()
+       console.log(weatherData)
     },[weatherData])
 
-    const fillInfo = ()=>{
-        const fill = {
-            'temp': weatherData.current.temp,
-            'sunrise': weatherData.current.sunrise,
-            'sunset': weatherData.current.sunset,
-            'windSpeed': weatherData.current.wind_speed,
-            'windDeg': weatherData.current.wind_deg
-        }
-
-        const entries = Object.entries(fill)
-
-        const infoArray = []
-
-        for(const [key,value] of entries){
-            const text = (key === 'temp') ? `${key}:${value}°F`: `${key}:${value}`
-            console.log(text)
-            setInfo([...info,text])
-        }
-
-        // setInfo(info.concat(infoArray))
-        // console.log(infoArray)
-        // console.log(info)
-        
-    }
-
+    
+    //if we are waiting for the weather data, let the user know
     if(loading){
         return (
-            <p className='weather'>Gathering Data</p>
+            <p className='loading'>Gathering Data</p>
         )
     }
 
@@ -112,8 +124,8 @@ const Weather = ({WEATHER_KEY}) =>{
     return(
         <div>
             {info.length === 0 ? 'Awaiting Data': 
-            <ul className='weather'>
-                {info.map(entry => <li>{entry}</li>)}
+            <ul id='weather'>
+                {info.map(entry => <li key={entry}>| {entry} |</li>)}
             </ul>
             }
         </div>

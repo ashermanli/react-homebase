@@ -1,7 +1,8 @@
 import React, {useState,useEffect, useRef} from 'react'
 import axios from 'axios'
+import config from './../config.js'
 
-const Weather = ({WEATHER_KEY, hours}) =>{
+const Weather = ({hours}) =>{
 
     const [loading, setLoading] =useState(false)
     const [coordinates, setCoordinates] = useState([])
@@ -46,6 +47,8 @@ const Weather = ({WEATHER_KEY, hours}) =>{
     //api call to retrieve weather information
     useEffect(()=>{
 
+        const WEATHER_KEY = config.WEATHER_KEY || null
+
         const weatherString = `https://api.openweathermap.org/data/2.5/onecall?units=imperial&lat=${coordinates[0]}&lon=${coordinates[1]}&appid=${WEATHER_KEY}`;
 
         if(initialRender.current){
@@ -87,7 +90,7 @@ const Weather = ({WEATHER_KEY, hours}) =>{
                 'temp': weatherData.current.temp,
                 'sunrise': weatherData.current.sunrise,
                 'sunset': weatherData.current.sunset,
-                'wind-speed': weatherData.current.wind_speed,
+                'wind-Speed': weatherData.current.wind_speed,
                 'windDeg': weatherData.current.wind_deg
             }
     
@@ -122,10 +125,10 @@ const Weather = ({WEATHER_KEY, hours}) =>{
 
     
     return(
-        <div>
+        <div className='loading'>
             {info.length === 0 ? 'Awaiting Data': 
             <ul id='weather'>
-                {info.map(entry => <li key={entry}>| {entry} |</li>)}
+                {info.map(entry => <li key={entry}> {entry} </li>)}
             </ul>
             }
         </div>

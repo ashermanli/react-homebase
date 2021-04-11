@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Weather from './Components/Weather'
 import Clock from './Components/Clock'
 import Bar from './Components/Bar'
+import List from './Components/List'
 
 import './App.css'
 
@@ -53,6 +54,7 @@ function App() {
       <Clock time={time}></Clock>
       <Bar progWidth={progWidth}></Bar>
       </div>
+      <List></List>
     </div>
   );
 }

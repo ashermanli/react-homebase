@@ -2,13 +2,15 @@
 
 
 body{
-  background-color: black;
-  color:lime;
   width:100%;
   height:100%;
-  font-family: 'Orbitron';
   margin:0;
   padding:0;
+
+  background-color: black;
+  color:lime;
+  
+  font-family: 'Orbitron';
 }
 
 ul{
@@ -16,63 +18,82 @@ ul{
 }
 
 #weather {
-  color:lime;
+  width:fit-content;
+  padding:0%;
+
   list-style: none;
+
   display:flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  width:fit-content;
-  padding:0%;
+  
+ 
   border:solid;
   border-color: lime;
   border-width: 1px;
   border-radius: .25em;
   
+  color:lime;
 }
 #weather li{
-  color:lime;
   width:fit-content;
+  padding:0 10px;
+
+  color:lime;
+  
   border-left: solid;
   border-right: solid;
   border-color: lime;
   border-width: 1px;
-  padding:0 10px;
 }
 
 .loading{
   margin:0;
+
   color:lime;
 }
 
 .clock-bar{
+  margin-top: 5%;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 5%;
 }
 
 .clock{
   color:lime;
+
   font-size: 3em;
 }
 
 .bar{
   width: 99.9%;
   height:5vh;
+
   border:solid;
   border-color: lime;
   border-width: 1px;
+  border-radius: .25em;
+
   background-color: grey;
 }
 
 .progress{
   width:1%;
   height:100%;
+
+  border:hidden;
+  
+  border-color: lime;
+  border-radius: .15em;
+
   background-color:lime;
 }
 
 .empty-list{
   margin-top: 5%;
+
   display:flex;
   flex-direction: column;
   align-items: center;
@@ -83,19 +104,23 @@ ul{
   border-width: 1px;
   border-color: red;
   border-radius: 5%;
+
   background-color: black;
   color:lime;
+
   font-size: 1em;
   font-family: 'Orbitron';
 }
 
 .empty-list input{
   padding:1em;
+
   font-family: 'Orbitron';
 }
 
 .list{
   margin-top: 5%;
+
   display:flex;
   flex-direction: column;
   align-items: center;
@@ -107,22 +132,24 @@ ul{
 
 .list ul{
   width:80%;
-  list-style: none;
   padding:0;
+
+  list-style: none;
 }
 
 .list li{
-  border: solid;
-  border-color: lime;
-  border-width: 1px;
-  border-radius: .25em;
+  margin:2.5% auto;
+  padding: 2.5% 5%;
 
   display:flex;
   flex-direction: row;
   justify-content: space-between;
 
-  margin:2.5% auto;
-  padding: 2.5% 5%;
+  border: solid;
+  border-color: lime;
+  border-width: 1px;
+  border-radius: .25em;
+
   font-size: 1.5em;
 }
 
@@ -132,7 +159,6 @@ ul{
 
 .list button{
   height: 100%;
-  padding:auto 300px;
 
   border: solid;
   border-width: 1px;
@@ -141,7 +167,8 @@ ul{
 
   background-color: black;
   color:lime;
-  font-size: 1em;
+
+  font-size: 1.25em;
   font-family: 'Orbitron';
 }
 
@@ -157,25 +184,33 @@ ul{
 .input-block button{
   height:fit-content;
   padding: 10px 10px;
-  
+
   border: solid;
   border-width: 1px;
   border-color: red;
-  border-radius: 5%;
+  border-radius: .25em;
+  border-left: hidden;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+
   background-color: black;
   color:lime;
+
   font-size: 1em;
   font-family: 'Orbitron';
 }
 
 .input-block input{
-  /* height: 100%; */
-  padding:10px;
-  background-color: black;
-  color: lime;
+  height: 100%;
+  /* padding:10px; */
+
   border: solid;
   border-color: lime;
   border-width: 1px;
+
+  background-color: black;
+  color: lime;
+
   font-family: 'Orbitron';
 }
 

@@ -24,8 +24,9 @@ ul{
   width:fit-content;
   padding:0%;
   border:solid;
-  border-color: limegreen;
+  border-color: lime;
   border-width: 1px;
+  border-radius: .25em;
   
 }
 #weather li{
@@ -43,7 +44,7 @@ ul{
   color:lime;
 }
 
-.ClockBar{
+.clock-bar{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -70,36 +71,14 @@ ul{
   background-color:lime;
 }
 
-.list{
+.empty-list{
   margin-top: 5%;
   display:flex;
   flex-direction: column;
   align-items: center;
-  
-  border:solid;
-  border-color: lime;
 }
 
-.list ul{
-  width:60%;
-  list-style: none;
-  padding:0;
-}
-
-.list li{
-  width:100%;
-  border: solid;
-  border-color: lime;
-  border-width: 1px;
-  display:flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin:2.5% auto;
-  padding: 2.5% 5%;
-  font-size: 1.5em;
-}
-
-.list button{
+.empty-list button{
   border: solid;
   border-width: 1px;
   border-color: red;
@@ -110,8 +89,94 @@ ul{
   font-family: 'Orbitron';
 }
 
-.list input{
+.empty-list input{
   padding:1em;
+  font-family: 'Orbitron';
+}
+
+.list{
+  margin-top: 5%;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  
+  border:solid;
+  border-color: lime;
+  border-radius: 1em;
+}
+
+.list ul{
+  width:80%;
+  list-style: none;
+  padding:0;
+}
+
+.list li{
+  border: solid;
+  border-color: lime;
+  border-width: 1px;
+  border-radius: .25em;
+
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  margin:2.5% auto;
+  padding: 2.5% 5%;
+  font-size: 1.5em;
+}
+
+.list li:hover{
+  border-width: 2px;  
+}
+
+.list button{
+  height: 100%;
+  padding:auto 300px;
+
+  border: solid;
+  border-width: 1px;
+  border-color: red;
+  border-radius: .25em;
+
+  background-color: black;
+  color:lime;
+  font-size: 1em;
+  font-family: 'Orbitron';
+}
+
+.list button:hover{
+  background-color: maroon;
+}
+
+.input-block{
+  height: 2.5em;
+  margin-bottom: 2.5%;
+}
+
+.input-block button{
+  height:fit-content;
+  padding: 10px 10px;
+  
+  border: solid;
+  border-width: 1px;
+  border-color: red;
+  border-radius: 5%;
+  background-color: black;
+  color:lime;
+  font-size: 1em;
+  font-family: 'Orbitron';
+}
+
+.input-block input{
+  /* height: 100%; */
+  padding:10px;
+  background-color: black;
+  color: lime;
+  border: solid;
+  border-color: lime;
+  border-width: 1px;
+  font-family: 'Orbitron';
 }
 
 

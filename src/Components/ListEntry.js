@@ -1,11 +1,11 @@
 import React from 'react'
 
-const listEntry = ({entry, handleDelete}) =>{
+const listEntry = ({entry,id, handleDelete}) =>{
 
     
     return(
         <>
-        <li key={entry}>{entry} <button onClick={handleDelete}>Delete</button></li>
+        <li key={id}>{entry} <button onClick={handleDelete}>Delete</button></li>
         </>
     )
 }

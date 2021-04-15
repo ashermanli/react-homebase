@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import ListEntry from './ListEntry'
 
-const List = ()=>{
+const List = ({handleNotification})=>{
 
     const[list,setList] = useState([])
     const[max, setMax] = useState(0)
@@ -12,7 +12,7 @@ const List = ()=>{
     const handleAdd = ()=>{
 
         if(input === ''){
-            alert('add some text for the love of god')
+            handleEmpty()
             return
         }
 
@@ -23,6 +23,7 @@ const List = ()=>{
         setList([...list,listItem])
         setMax(max+1)
         setInput('')
+        handleSuccess('Successfully added')
     }
 
     const handleDelete = (id)=>{
@@ -34,6 +35,8 @@ const List = ()=>{
             setMax(0)
             setInput('Add an entry')
         }
+
+        handleSuccess('Successfully deleted')
     }
 
     const handleInput = (e)=>{
@@ -45,6 +48,24 @@ const List = ()=>{
         setInput('')
     }
 
+    const handleSuccess = (message)=>{
+        const noti={
+            'notification': message
+        }
+
+        handleNotification(noti)
+    }
+
+    const handleEmpty = ()=>{
+        const noti= {
+            'error':'Please input some text'
+        }
+        handleNotification(noti)
+    }
+
+    const noti={
+        'notification': 'Please input some text'
+    }
     
     return(
         <div className={list.length >0 ? 'list': 'empty-list'}>

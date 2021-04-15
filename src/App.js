@@ -3,6 +3,7 @@ import Weather from './Components/Weather'
 import Clock from './Components/Clock'
 import Bar from './Components/Bar'
 import List from './Components/List'
+import Notification from './Components/Notification'
 
 import './App.css'
 
@@ -11,6 +12,7 @@ function App() {
   const [time, setTime] = useState('00:00:00')
   const [hours, setHours] = useState('')
   const [progWidth, setProgWidth] = useState(0)
+  const [notification, setNotification] = useState(null)
 
   //Function to return the current time
   const currentTime = () =>{
@@ -45,16 +47,25 @@ function App() {
     }, 1000)
   })
 
+  const handleNotification = (message)=>{
+
+    setNotification(message)
+
+    setTimeout(()=>{
+      setNotification(null)
+    },5000)
+  }
  
 
   return (
     <div className="Main">
-      <Weather hours={hours}></Weather>
-      <div className="ClockBar">
-      <Clock time={time}></Clock>
-      <Bar progWidth={progWidth}></Bar>
+      <Weather hours={hours}/>
+      <div className="clock-bar">
+        <Clock time={time}/>
+        <Bar progWidth={progWidth}/>
       </div>
-      <List></List>
+      <Notification notification={notification}/>
+      <List handleNotification={handleNotification}/>
     </div>
   );
 }

@@ -30,7 +30,7 @@ const Weather = ({hours}) =>{
 
         setCoordinates([latitude,longitude])
 
-        // console.log("lat", latitude, "lon", longitude)
+        console.log("lat", latitude, "lon", longitude)
     }
 
     //On Failure of geolocation

@@ -25,7 +25,7 @@ const Weather = ({hours}) =>{
     //On success of geolocation
     const geoSuccess = (position)=>{
 
-        const latitude = position.coords.latitude
+    const latitude = position.coords.latitude
         const longitude = position.coords.longitude
 
         setCoordinates([latitude,longitude])
@@ -42,7 +42,7 @@ const Weather = ({hours}) =>{
     },[])
 
      //to prevent api call on initial render    
-     const initialRender = useRef(true)
+    const initialRender = useRef(true)
 
     //api call to retrieve weather information
     useEffect(()=>{
@@ -83,7 +83,7 @@ const Weather = ({hours}) =>{
             var val = Math.floor((num / 22.5) + 0.5);
             var arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
             return arr[(val % 16)];
-          }
+        }
 
         const fillInfo = ()=>{
             const fill = {
@@ -110,8 +110,8 @@ const Weather = ({hours}) =>{
             }
         }
 
-       if(weatherData != null)fillInfo()
-       console.log(weatherData)
+    if(weatherData != null)fillInfo()
+    console.log(weatherData)
     },[weatherData])
 
     

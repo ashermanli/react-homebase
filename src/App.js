@@ -13,6 +13,7 @@ function App() {
   const [hours, setHours] = useState('')
   const [progWidth, setProgWidth] = useState(0)
   const [notification, setNotification] = useState(null)
+  const [viewAll, setViewAll] = useState(false)
 
   //Function to return the current time
   const currentTime = () =>{
@@ -55,6 +56,11 @@ function App() {
       setNotification(null)
     },5000)
   }
+
+  //toggles between a single hour bar or all 24 hour bars
+  const handleView = ()=>{
+    setViewAll(!viewAll)
+  }
  
 
   return (
@@ -62,7 +68,15 @@ function App() {
       <Weather hours={hours}/>
       <div className="clock-bar">
         <Clock time={time}/>
-        <Bar progWidth={progWidth}/>
+        <div className="bar-section">
+          <button onClick={handleView}>Change View</button>
+          <Bar progWidth={progWidth} 
+            hour={formatTime(new Date().getHours())} 
+            formatTime={formatTime} 
+            time={time}
+            viewAll={viewAll}
+          />
+        </div>
       </div>
       <Notification notification={notification}/>
       <List handleNotification={handleNotification}/>

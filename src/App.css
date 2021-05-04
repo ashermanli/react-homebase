@@ -94,17 +94,30 @@ ul{
   font-size: 3em;
 }
 
+.bar-section{
+  width: 99.9%;
+}
+
 .bar{
   width: 99.9%;
   height:5vh;
+  margin: 1px 0;
 
   border:solid;
-  border-color: lime;
+  border-color: red;
   border-width: 1px;
   border-radius: .25em;
 
-  background-color: grey;
+  color:black;
+  background-color: lime;
+
 }
+
+.expired{
+  background-color: black;
+  color:lime;
+}
+
 
 .progress{
   width:1%;
@@ -112,10 +125,10 @@ ul{
 
   border:hidden;
   
-  border-color: lime;
   border-radius: .15em;
 
-  background-color:lime;
+  color:lime;
+  background-color:black;
 }
 
 .empty-list{

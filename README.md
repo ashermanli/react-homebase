@@ -1,6 +1,6 @@
-$project Homebase
-========
+# Homebase
 
+## Description
 $project will solve your problem of where to start with documentation,
 by providing a basic explanation of how to do it easily.
 
@@ -21,18 +21,23 @@ Look how easy it is to use:
     # Get your stuff done
     project.do_stuff()
 
-Features
+## Features
 --------
 
 - Be awesome
 - Make things faster
 
-Installation
+## Installation
 ------------
 
 Install $project by running:
 
     install project
+## Objectives and Outcomes
+
+## Development
+
+## Getting Started
 
 Contribute
 ----------

@@ -15,11 +15,6 @@ that shows how much time is left in the current hour, like a modern hour-glass.
 - The app will display basic information such as current temperature, sunrise, sunset, wind speed, and wind direction. 
 - The weather data is gathered when the app is initiated and it will update the information every hour.  
 
-Look how easy it is to use:
-
-    import project
-    # Get your stuff done
-    project.do_stuff()
 
 ## Features
 --------
@@ -49,10 +44,15 @@ $ npm start
 ```
 
 ## Objectives and Outcomes
-
+This project began as my introduction to Javascript and React.  I plan to make incremental upgrades to the website 
+and refine it into an intuitive productivity app one can anywhere. This serves as the first project I am creating in React. 
+- React
+- OpenWeatherMap API
+- Navigator Web API
 ## Development
+### Frontend Framework
+- React
 
-## Getting Started
 
 Contribute
 ----------

@@ -23,7 +23,7 @@ const Bar = ({progWidth, hour, formatTime, time,viewAll}) =>{
 
     fillBars()
 
-    console.log(barArray)
+    // console.log(barArray)
   return (
       <>
           {viewAll ? barArray.map(item => item):

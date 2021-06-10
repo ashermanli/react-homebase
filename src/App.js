@@ -65,7 +65,7 @@ function App() {
 
   return (
     <div className="Main">
-      <Weather hours={hours}/>
+      <Weather hours={hours} formatTime={formatTime}/>
       <div className="clock-bar">
         <Clock time={time}/>
         <div className="bar-section">

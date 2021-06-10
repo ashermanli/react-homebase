@@ -2,7 +2,7 @@ import React, {useState,useEffect, useRef} from 'react'
 import axios from 'axios'
 import config from './../config.js'
 
-const Weather = ({hours}) =>{
+const Weather = ({hours, formatTime}) =>{
 
     const [loading, setLoading] =useState(false)
     const [coordinates, setCoordinates] = useState([])
@@ -78,13 +78,14 @@ const Weather = ({hours}) =>{
 
     //Once the api call has gathered the weather data, make a call to fill the array with data we want
     useEffect(()=>{
-
+        //convert degrees to compass directions
         const degToCompass = (num)=> {
             var val = Math.floor((num / 22.5) + 0.5);
             var arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
             return arr[(val % 16)];
           }
 
+        //Fill an object with the weather information we desire
         const fillInfo = ()=>{
             const fill = {
                 'temp': weatherData.current.temp,
@@ -94,13 +95,14 @@ const Weather = ({hours}) =>{
                 'windDeg': weatherData.current.wind_deg
             }
     
+            //create iterable key value pair array
             const entries = Object.entries(fill)
             
             let infoArray = []
     
             for(const [key,value] of entries){
                 const text = (key === 'temp') ? `${key.toUpperCase()} : ${value}°F`: 
-                             (key === 'sunrise' || key === 'sunset')? `${key.toUpperCase()} ${new Date(value *1000).getHours()} : ${new Date(value *1000).getMinutes()}`:
+                             (key === 'sunrise' || key === 'sunset')? `${key.toUpperCase()} ${formatTime(new Date(value *1000).getHours())} : ${formatTime(new Date(value *1000).getMinutes())}`:
                              (key === 'windDeg')? `WIND-DIR : ${degToCompass(value)}`:
                              `${key.toUpperCase()} : ${value}`
                 infoArray = [...infoArray,text]
@@ -112,7 +114,7 @@ const Weather = ({hours}) =>{
 
        if(weatherData != null)fillInfo()
        console.log(weatherData)
-    },[weatherData])
+    },[weatherData, formatTime])
 
     
     //if we are waiting for the weather data, let the user know

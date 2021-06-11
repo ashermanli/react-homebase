@@ -1,6 +1,6 @@
 import React, {useState,useEffect, useRef} from 'react'
 import axios from 'axios'
-import config from './../config.js'
+
 
 const Weather = ({hours, formatTime}) =>{
 
@@ -47,7 +47,7 @@ const Weather = ({hours, formatTime}) =>{
     //api call to retrieve weather information
     useEffect(()=>{
 
-        const WEATHER_KEY = config.WEATHER_KEY || null
+        const WEATHER_KEY = process.env.REACT_APP_WEATHER_KEY || null
 
         const weatherString = `https://api.openweathermap.org/data/2.5/onecall?units=imperial&lat=${coordinates[0]}&lon=${coordinates[1]}&appid=${WEATHER_KEY}`;
 
@@ -113,7 +113,7 @@ const Weather = ({hours, formatTime}) =>{
         }
 
        if(weatherData != null)fillInfo()
-       console.log(weatherData)
+       //console.log(weatherData)
     },[weatherData, formatTime])
 
     

@@ -4,8 +4,9 @@ import Clock from './Components/Clock'
 import Bar from './Components/Bar'
 import List from './Components/List'
 import Notification from './Components/Notification'
-
 import './App.css'
+
+require('dotenv').config()
 
 function App() {
 

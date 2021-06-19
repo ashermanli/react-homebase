@@ -4,137 +4,137 @@ import axios from 'axios'
 
 const Weather = ({hours, formatTime}) =>{
 
-    const [loading, setLoading] =useState(false)
-    const [coordinates, setCoordinates] = useState([])
-    const [weatherData, setWeatherData] = useState(null)
-    const [info, setInfo] = useState([])
+  const [loading, setLoading] =useState(false)
+  const [coordinates, setCoordinates] = useState([])
+  const [weatherData, setWeatherData] = useState(null)
+  const [info, setInfo] = useState([])
     
 
-    //On initial render we gather coordinates for our location
-    useEffect(()=>{
+  //On initial render we gather coordinates for our location
+  useEffect(()=>{
     //Gets coordinates for currrent location
     const getLocationWeather = () =>{
-        if(navigator.geolocation){
-            navigator.geolocation.getCurrentPosition(geoSuccess,geoError)
-        }
-        else{
-            alert('Geolocation is not supported by this browser')
-        }
+      if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(geoSuccess,geoError)
+      }
+      else{
+        alert('Geolocation is not supported by this browser')
+      }
     }
 
     //On success of geolocation
     const geoSuccess = (position)=>{
 
-        const latitude = position.coords.latitude
-        const longitude = position.coords.longitude
+      const latitude = position.coords.latitude
+      const longitude = position.coords.longitude
 
-        setCoordinates([latitude,longitude])
+      setCoordinates([latitude,longitude])
 
-        // console.log("lat", latitude, "lon", longitude)
+      // console.log("lat", latitude, "lon", longitude)
     }
 
     //On Failure of geolocation
     const geoError = ()=>{
-        alert('Geolocation failed')
+      alert('Geolocation failed')
     }
 
-        getLocationWeather()
-    },[])
+    getLocationWeather()
+  },[])
 
-     //to prevent api call on initial render    
-     const initialRender = useRef(true)
+  //to prevent api call on initial render    
+  const initialRender = useRef(true)
 
-    //api call to retrieve weather information
-    useEffect(()=>{
+  //api call to retrieve weather information
+  useEffect(()=>{
 
-        const WEATHER_KEY = process.env.REACT_APP_WEATHER_KEY || null
+    const WEATHER_KEY = process.env.REACT_APP_WEATHER_KEY || null
 
-        const weatherString = `https://api.openweathermap.org/data/2.5/onecall?units=imperial&lat=${coordinates[0]}&lon=${coordinates[1]}&appid=${WEATHER_KEY}`;
+    const weatherString = `https://api.openweathermap.org/data/2.5/onecall?units=imperial&lat=${coordinates[0]}&lon=${coordinates[1]}&appid=${WEATHER_KEY}`
 
-        if(initialRender.current){
-            initialRender.current = false
-        }
-        else{
-            setLoading(true)
-            axios.get(weatherString)
-            .then(response => {
-                return response.data
-            })
-            .then(data => {
-                setWeatherData(data)
+    if(initialRender.current){
+      initialRender.current = false
+    }
+    else{
+      setLoading(true)
+      axios.get(weatherString)
+        .then(response => {
+          return response.data
+        })
+        .then(data => {
+          setWeatherData(data)
                 
-                //for debugging
-                // const time = new Date(data.current.dt *1000)
-                // const hour = time.getHours()
-                // const min = time.getMinutes()
-                // console.log(hour, min)
-            })
-            .catch(err => console.log(err))
-            .finally(() => {
-                setLoading(false)
-            })
+          //for debugging
+          // const time = new Date(data.current.dt *1000)
+          // const hour = time.getHours()
+          // const min = time.getMinutes()
+          // console.log(hour, min)
+        })
+        .catch(err => console.log(err))
+        .finally(() => {
+          setLoading(false)
+        })
     }
-    },[coordinates, hours])
+  },[coordinates, hours])
 
-    //Once the api call has gathered the weather data, make a call to fill the array with data we want
-    useEffect(()=>{
-        //convert degrees to compass directions
-        const degToCompass = (num)=> {
-            var val = Math.floor((num / 22.5) + 0.5);
-            var arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
-            return arr[(val % 16)];
-          }
+  //Once the api call has gathered the weather data, make a call to fill the array with data we want
+  useEffect(()=>{
+    //convert degrees to compass directions
+    const degToCompass = (num)=> {
+      var val = Math.floor((num / 22.5) + 0.5)
+      var arr = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW']
+      return arr[(val % 16)]
+    }
 
-        //Fill an object with the weather information we desire
-        const fillInfo = ()=>{
-            const fill = {
-                'temp': weatherData.current.temp,
-                'sunrise': weatherData.current.sunrise,
-                'sunset': weatherData.current.sunset,
-                'wind-Speed': weatherData.current.wind_speed,
-                'windDeg': weatherData.current.wind_deg
-            }
+    //Fill an object with the weather information we desire
+    const fillInfo = ()=>{
+      const fill = {
+        'temp': weatherData.current.temp,
+        'sunrise': weatherData.current.sunrise,
+        'sunset': weatherData.current.sunset,
+        'wind-Speed': weatherData.current.wind_speed,
+        'windDeg': weatherData.current.wind_deg
+      }
     
-            //create iterable key value pair array
-            const entries = Object.entries(fill)
+      //create iterable key value pair array
+      const entries = Object.entries(fill)
             
-            let infoArray = []
+      let infoArray = []
     
-            for(const [key,value] of entries){
-                const text = (key === 'temp') ? `${key.toUpperCase()} : ${value}°F`: 
-                             (key === 'sunrise' || key === 'sunset')? `${key.toUpperCase()} ${formatTime(new Date(value *1000).getHours())} : ${formatTime(new Date(value *1000).getMinutes())}`:
-                             (key === 'windDeg')? `WIND-DIR : ${degToCompass(value)}`:
-                             `${key.toUpperCase()} : ${value}`
-                infoArray = [...infoArray,text]
-                // console.log(infoArray)
-                setInfo(infoArray)
+      for(const [key,value] of entries){
+        const text = (key === 'temp') ? `${key.toUpperCase()} : ${value}°F`: 
+          (key === 'sunrise' || key === 'sunset')? `${key.toUpperCase()} ${formatTime(new Date(value *1000).getHours())} : ${formatTime(new Date(value *1000).getMinutes())}`:
+            (key === 'windDeg')? `WIND-DIR : ${degToCompass(value)}`:
+              `${key.toUpperCase()} : ${value}`
+        infoArray = [...infoArray,text]
+        // console.log(infoArray)
+        setInfo(infoArray)
     
-            }
-        }
-
-       if(weatherData != null)fillInfo()
-       //console.log(weatherData)
-    },[weatherData, formatTime])
-
-    
-    //if we are waiting for the weather data, let the user know
-    if(loading){
-        return (
-            <p className='loading'>Gathering Data</p>
-        )
+      }
     }
 
+    if(weatherData != null)fillInfo()
+    //console.log(weatherData)
+  },[weatherData, formatTime])
 
     
-    return(
-        <div className='loading'>
-            {info.length === 0 ? 'Awaiting Data': 
-            <ul id='weather'>
-                {info.map(entry => <li key={entry}> {entry} </li>)}
-            </ul>
-            }
-        </div>
+  //if we are waiting for the weather data, let the user know
+  if(loading){
+    return (
+      <p className='loading'>Gathering Data</p>
     )
+  }
+
+
+    
+  return(
+    <div className='loading'>
+      {info.length === 0 ? 'Awaiting Data': 
+        <ul id='weather'>
+          {info.map(entry => <li key={entry}> {entry} </li>)}
+        </ul>
+      }
+    </div>
+  )
     
 }
 

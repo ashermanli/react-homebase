@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Weather from './Components/Weather'
 import Clock from './Components/Clock'
 import Bar from './Components/Bar'
+import BarView from './Components/BarView'
 import List from './Components/List'
 import Notification from './Components/Notification'
 import './App.css'
@@ -14,7 +15,7 @@ function App() {
   const [hours, setHours] = useState('')
   const [progWidth, setProgWidth] = useState(0)
   const [notification, setNotification] = useState(null)
-  const [viewAll, setViewAll] = useState(false)
+  const [view, setView] = useState(1)
 
   //Function to return the current time
   const currentTime = () =>{
@@ -23,14 +24,14 @@ function App() {
     const min = formatTime(date.getMinutes())
     const sec = formatTime(date.getSeconds())
 
-    setTime(hour+":"+min+":"+sec)
+    setTime(hour+':'+min+':'+sec)
     setHours(hour)
     calcProgWidth(min,sec)
   }
 
   //Pads the time with extra zeroes if necessary
   const formatTime = (time) =>{
-    const formatted = time<10? "0"+time: time
+    const formatted = time<10? '0'+time: time
     return formatted
   }
 
@@ -59,8 +60,10 @@ function App() {
   }
 
   //toggles between a single hour bar or all 24 hour bars
-  const handleView = ()=>{
-    setViewAll(!viewAll)
+  const handleView = (selection) =>{
+    
+    setView(selection)
+
   }
  
 
@@ -70,19 +73,19 @@ function App() {
       <div className="clock-bar">
         <Clock time={time}/>
         <div className="bar-section">
-          <button onClick={handleView}>Change View</button>
+          <BarView handleView={handleView}/>
           <Bar progWidth={progWidth} 
             hour={formatTime(new Date().getHours())} 
             formatTime={formatTime} 
             time={time}
-            viewAll={viewAll}
+            view={view}
           />
         </div>
       </div>
       <Notification notification={notification}/>
       <List handleNotification={handleNotification}/>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

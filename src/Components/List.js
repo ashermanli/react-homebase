@@ -3,82 +3,80 @@ import ListEntry from './ListEntry'
 
 const List = ({handleNotification})=>{
 
-    const[list,setList] = useState([])
-    const[max, setMax] = useState(0)
-    const[input,setInput] = useState('Add an Entry')
+  const[list,setList] = useState([])
+  const[max, setMax] = useState(0)
+  const[input,setInput] = useState('Add an Entry')
 
     
 
-    const handleAdd = ()=>{
+  const handleAdd = ()=>{
 
-        if(input === ''){
-            handleEmpty()
-            return
-        }
-
-        let listItem = {
-            "id":max+1,
-            'entry':input
-        }
-        setList([...list,listItem])
-        setMax(max+1)
-        setInput('')
-        handleSuccess('Successfully added')
+    if(input === ''){
+      handleEmpty()
+      return
     }
 
-    const handleDelete = (id)=>{
+    let listItem = {
+      'id':max+1,
+      'entry':input
+    }
+    setList([...list,listItem])
+    setMax(max+1)
+    setInput('')
+    handleSuccess('Successfully added')
+  }
 
-        let filteredArray = list.filter(item => item.id !== id)
-        setList(filteredArray)
+  const handleDelete = (id)=>{
 
-        if(filteredArray.length === 0){
-            setMax(0)
-            setInput('Add an entry')
-        }
+    let filteredArray = list.filter(item => item.id !== id)
+    setList(filteredArray)
 
-        handleSuccess('Successfully deleted')
+    if(filteredArray.length === 0){
+      setMax(0)
+      setInput('Add an entry')
     }
 
-    const handleInput = (e)=>{
-        console.log(e.target.value)
-        setInput(e.target.value)
-    }
+    handleSuccess('Successfully deleted')
+  }
 
-    const handleInputClick = ()=>{
-        setInput('')
-    }
+  const handleInput = (e)=>{
+    console.log(e.target.value)
+    setInput(e.target.value)
+  }
 
-    const handleSuccess = (message)=>{
-        const noti={
-            'notification': message
-        }
+  const handleInputClick = ()=>{
+    setInput('')
+  }
 
-        handleNotification(noti)
-    }
-
-    const handleEmpty = ()=>{
-        const noti= {
-            'error':'Please input some text'
-        }
-        handleNotification(noti)
-    }
-
+  const handleSuccess = (message)=>{
     const noti={
-        'notification': 'Please input some text'
+      'notification': message
     }
+
+    handleNotification(noti)
+  }
+
+  const handleEmpty = ()=>{
+    const noti= {
+      'error':'Please input some text'
+    }
+    handleNotification(noti)
+  }
+
     
-    return(
-        <div className={list.length >0 ? 'list': 'empty-list'}>
-        <ul>
-            {list.map(entry => <ListEntry key={entry.id} entry={entry.entry} id={entry.id} handleDelete={() =>handleDelete(entry.id)}></ListEntry>)}
-        </ul>
-        <div className='input-block'>
-            <input type='text' value={input} onClick={handleInputClick} onChange={handleInput}></input>
-            <button onClick={handleAdd}>Add</button>
-        </div>
-        </div>
-    )
+  return(
+    <div className={list.length >0 ? 'list': 'empty-list'}>
+      <ul>
+        {list.map(entry => <ListEntry key={entry.id} entry={entry.entry} id={entry.id} handleDelete={() =>handleDelete(entry.id)}></ListEntry>)}
+      </ul>
+      <div className='input-block'>
+        <input type='text' value={input} onClick={handleInputClick} onChange={handleInput}></input>
+        <button onClick={handleAdd}>Add</button>
+      </div>
+    </div>
+  )
 
 }
+
 
 export default List

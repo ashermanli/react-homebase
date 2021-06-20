@@ -69,7 +69,7 @@ function App() {
 
   return (
     // main container
-    <div className="Main h-screen flex flex-col items-center">
+    <div className="Main flex flex-col items-center">
       {/* Weather Section */}
       <Weather hours={hours} formatTime={formatTime}/>
       {/* Clock and Bar Section */}

@@ -5,7 +5,7 @@ import Bar from './Components/Bar'
 import BarView from './Components/BarView'
 import List from './Components/List'
 import Notification from './Components/Notification'
-import './App.css'
+// import './App.css'
 
 require('dotenv').config()
 
@@ -68,11 +68,16 @@ function App() {
  
 
   return (
-    <div className="Main">
+    // main container
+    <div className="Main h-screen flex flex-col items-center">
+      {/* Weather Section */}
       <Weather hours={hours} formatTime={formatTime}/>
-      <div className="clock-bar">
+      {/* Clock and Bar Section */}
+      <div className="clock-bar w-full">
+        {/* Clock */}
         <Clock time={time}/>
-        <div className="bar-section">
+        {/* Bar Section */}
+        <div className="bar-section h-auto flex flex-col">
           <BarView handleView={handleView}/>
           <Bar progWidth={progWidth} 
             hour={formatTime(new Date().getHours())} 
@@ -83,6 +88,7 @@ function App() {
         </div>
       </div>
       <Notification notification={notification}/>
+      {/* List */}
       <List handleNotification={handleNotification}/>
     </div>
   )

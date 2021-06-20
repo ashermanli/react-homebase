@@ -65,13 +65,13 @@ const List = ({handleNotification})=>{
 
     
   return(
-    <div className={list.length >0 ? 'list': 'empty-list'}>
-      <ul>
+    <div className='border-2 border-red-500 w-4/5 h-auto flex flex-col items-center my-5'>
+      <ul className='w-full p-2 flex flex-col items-center space-y-2'>
         {list.map(entry => <ListEntry key={entry.id} entry={entry.entry} id={entry.id} handleDelete={() =>handleDelete(entry.id)}></ListEntry>)}
       </ul>
       <div className='input-block'>
-        <input type='text' value={input} onClick={handleInputClick} onChange={handleInput}></input>
-        <button onClick={handleAdd}>Add</button>
+        <input className='bg-black m-2 border-2 border-red-500' type='text' value={input} onClick={handleInputClick} onChange={handleInput}></input>
+        <button className='w-16 border-2 border-red-500' onClick={handleAdd}>Add</button>
       </div>
     </div>
   )

@@ -120,17 +120,17 @@ const Weather = ({hours, formatTime}) =>{
   //if we are waiting for the weather data, let the user know
   if(loading){
     return (
-      <p className='loading'>Gathering Data</p>
+      <p className='loading self-start'>Gathering Data</p>
     )
   }
 
 
     
   return(
-    <div className='loading'>
+    <div className='loading self-start'>
       {info.length === 0 ? 'Awaiting Data': 
-        <ul id='weather'>
-          {info.map(entry => <li key={entry}> {entry} </li>)}
+        <ul id='weather' className='flex flex-row space-x-2'>
+          {info.map(entry => <li key={entry}className='border-2 border-green-500'> {entry} </li>)}
         </ul>
       }
     </div>

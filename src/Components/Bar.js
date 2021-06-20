@@ -17,13 +17,13 @@ const Bar = ({progWidth, hour, formatTime, time,view}) =>{
 
       let barItem
       if(display < hour){
-        barItem = <div className='bar expired'>{formatTime(display)}</div>
+        barItem = <div className='bar expired w-full h-8 border 2 border-red-500' >{formatTime(display)}</div>
       }
       else if (display > hour){
-        barItem = <div className='bar'>{formatTime(display)}</div>
+        barItem = <div className='bar w-full h-8 border 2 border-red-500 bg-green-500'>{formatTime(display)}</div>
       }
       else{
-        barItem = <div className='bar'><div className='progress' style={{width:progWidth}}>{time}</div></div>
+        barItem = <div className='bar w-full h-8 border-2 border-red-600 bg-green-500 z-0'><div className='progress h-full bg-black' style={{width:progWidth}}>{time}</div></div>
       }
       barArray = [...barArray, barItem]
     }
@@ -34,10 +34,10 @@ const Bar = ({progWidth, hour, formatTime, time,view}) =>{
 
   // console.log(barArray)
   return (
-    <>
+    <div className='text-green-800'>
       {view !== 1 ? barArray.map(item => item):
-        <div className='bar'><div className='progress' style={{width:progWidth}}></div></div>}
-    </>
+        <div className='bar w-full h-8 border-2 border-red-600 bg-green-500 z-0'><div className='progress h-full bg-black' style={{width:progWidth}}></div></div>}
+    </div>
     
   )
 }

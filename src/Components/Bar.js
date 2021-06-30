@@ -46,10 +46,19 @@ const Bar = ({progWidth, hour, formatTime, time,view, weatherData}) =>{
     
     let iconCode
     let iconString
+
+    
     //the hourly forecast begins at the current hour, so we must account for any hours that have already passed
     let expiredCount = 0
 
     for(let i = 0;i<view;i++){
+      
+      if(hourlyInfo.length !== 0){
+        //offset the current item by the number of items already expired in order to begin at the 0th + 1 item
+        iconCode = hourlyInfo ? hourlyInfo[i-expiredCount].icon: ''
+        iconString = `https://openweathermap.org/img/w/${iconCode}.png`
+      }
+
       //Make time display independent of iteration for different views
       let display = i
 
@@ -60,7 +69,7 @@ const Bar = ({progWidth, hour, formatTime, time,view, weatherData}) =>{
 
       let barItem
       if(display < hour){
-        
+
         //this will update the expired count
         expiredCount += 1
 
@@ -70,11 +79,7 @@ const Bar = ({progWidth, hour, formatTime, time,view, weatherData}) =>{
         </div>
       }
       else if (display > hour){
-        if(hourlyInfo.length !== 0){
-          //offset the current item by the number of items already expired in order to begin at the 0th + 1 item
-          iconCode = hourlyInfo ? hourlyInfo[i-expiredCount].icon: ''
-          iconString = `https://openweathermap.org/img/w/${iconCode}.png`
-        }
+        
         barItem = 
         <div key={i} className='flex flex-row justify-between w-full h-8 border border-red-500 bg-green-500'>
           {formatTime(display)}
@@ -87,6 +92,7 @@ const Bar = ({progWidth, hour, formatTime, time,view, weatherData}) =>{
           <div className='progress h-full bg-black' style={{width:progWidth}}>
             {time}
           </div>
+          <img src={iconString}/>
         </div>
       }
       barArray = [...barArray, barItem]

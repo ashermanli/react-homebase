@@ -5,10 +5,8 @@ const Bar = ({progWidth, hour, formatTime, time,view, weatherData}) =>{
   const [hourlyForecast, setHourlyForecast] = useState([])
   const [hourlyInfo, setHourlyInfo] = useState([])
   
-
   let barArray = []
   
-
   useEffect(()=>{
 
     if(weatherData != null){
@@ -48,16 +46,12 @@ const Bar = ({progWidth, hour, formatTime, time,view, weatherData}) =>{
     
     let iconCode
     let iconString
+    //the hourly forecast begins at the current hour, so we must account for any hours that have already passed
+    let expiredCount = 0
 
     for(let i = 0;i<view;i++){
       //Make time display independent of iteration for different views
       let display = i
-
-
-      if(hourlyInfo.length !== 0){
-        iconCode = hourlyInfo ? hourlyInfo[display].icon: ''
-        iconString = `https://openweathermap.org/img/w/${iconCode}.png`
-      }
 
       //If the view chosen is 12 and the time is past 12, show the last 12 hours of the day
       if(view === 12){
@@ -66,17 +60,25 @@ const Bar = ({progWidth, hour, formatTime, time,view, weatherData}) =>{
 
       let barItem
       if(display < hour){
+        
+        //this will update the expired count
+        expiredCount += 1
+
         barItem = 
         <div key={i}className='flex flex-row justify-between w-full h-8 border border-red-500' >
           {formatTime(display)}
         </div>
       }
       else if (display > hour){
+        if(hourlyInfo.length !== 0){
+          //offset the current item by the number of items already expired in order to begin at the 0th + 1 item
+          iconCode = hourlyInfo ? hourlyInfo[i-expiredCount].icon: ''
+          iconString = `https://openweathermap.org/img/w/${iconCode}.png`
+        }
         barItem = 
         <div key={i} className='flex flex-row justify-between w-full h-8 border border-red-500 bg-green-500'>
           {formatTime(display)}
           <img src={iconString}/>
-          <span>{hourlyInfo.length !== 0 ? hourlyInfo[i-3].time: ''}</span>
         </div>
       }
       else{
@@ -85,8 +87,6 @@ const Bar = ({progWidth, hour, formatTime, time,view, weatherData}) =>{
           <div className='progress h-full bg-black' style={{width:progWidth}}>
             {time}
           </div>
-          <img src={iconString}/>
-          <span>{hourlyInfo.length !== 0 ? hourlyInfo[i-3].time: ''}</span>
         </div>
       }
       barArray = [...barArray, barItem]

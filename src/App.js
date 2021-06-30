@@ -15,7 +15,9 @@ function App() {
   const [hours, setHours] = useState('')
   const [progWidth, setProgWidth] = useState(0)
   const [notification, setNotification] = useState(null)
-  const [view, setView] = useState(1)
+  const [view, setView] = useState(12)
+  const [weatherData, setWeatherData] = useState(null)
+  
 
   //Function to return the current time
   const currentTime = () =>{
@@ -71,7 +73,13 @@ function App() {
     // main container
     <div className="Main flex flex-col items-center">
       {/* Weather Section */}
-      <Weather hours={hours} formatTime={formatTime}/>
+      <Weather 
+        hours={hours} 
+        formatTime={formatTime} 
+        weatherData={weatherData} 
+        setWeatherData={setWeatherData}
+      />
+
       {/* Clock and Bar Section */}
       <div className="clock-bar w-full">
         {/* Clock */}
@@ -84,6 +92,7 @@ function App() {
             formatTime={formatTime} 
             time={time}
             view={view}
+            weatherData={weatherData}
           />
         </div>
       </div>

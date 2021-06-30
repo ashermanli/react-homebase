@@ -2,11 +2,10 @@ import React, {useState,useEffect, useRef} from 'react'
 import axios from 'axios'
 
 
-const Weather = ({hours, formatTime}) =>{
+const Weather = ({hours, formatTime, weatherData, setWeatherData}) =>{
 
   const [loading, setLoading] =useState(false)
   const [coordinates, setCoordinates] = useState([])
-  const [weatherData, setWeatherData] = useState(null)
   const [info, setInfo] = useState([])
     
 
@@ -43,20 +42,21 @@ const Weather = ({hours, formatTime}) =>{
 
   //to prevent api call on initial render    
   const initialRender = useRef(true)
-
+  
   //api call to retrieve weather information
   useEffect(()=>{
 
     const WEATHER_KEY = process.env.REACT_APP_WEATHER_KEY || null
 
-    const weatherString = `https://api.openweathermap.org/data/2.5/onecall?units=imperial&lat=${coordinates[0]}&lon=${coordinates[1]}&appid=${WEATHER_KEY}`
+    const currentWeatherString = `https://api.openweathermap.org/data/2.5/onecall?units=imperial&lat=${coordinates[0]}&lon=${coordinates[1]}&appid=${WEATHER_KEY}`
+    
 
     if(initialRender.current){
       initialRender.current = false
     }
     else{
       setLoading(true)
-      axios.get(weatherString)
+      axios.get(currentWeatherString)
         .then(response => {
           return response.data
         })
